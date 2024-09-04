@@ -91,6 +91,7 @@ document.body.append(containerDiv)
 let gridSize = 16;
 let childDivEl;
 let opacityOn = false       //switch button for toggling opacity
+let colorMode = 'single'
 
 //---------Function to create grid inside parent div based on grid size value
 function createGrid() {
@@ -104,7 +105,7 @@ function createGrid() {
         console.log(containerDiv.childElementCount);
 
     }
-    pickColor()
+    pickSingleColor()
 
 }
 
@@ -124,7 +125,7 @@ gridSizeSubmitBtn.addEventListener('click', () => {
 })
 
 //---------function to select a color through color button
-function pickColor() {
+function pickSingleColor() {
     for (let i = 1; i <= containerDiv.childElementCount; i++) {
         let Opacity = 0.1
         let element = containerDiv.querySelector(`.child-div-${i}`)
@@ -156,7 +157,7 @@ function randomColor(number) {
 }
 
 //---------function to generate random color 
-function addRandomColorEvent() {
+function pickRandomColor() {
     for (let i = 1; i <= containerDiv.childElementCount; i++) {
         let Opacity = 0.1
         let element = containerDiv.querySelector(`.child-div-${i}`)
@@ -181,14 +182,14 @@ function addRandomColorEvent() {
 
 //---------adding event listener to random color button
 randomColorBtn.addEventListener('click', () => {
-    colorBtn.removeEventListener('click', pickColor); //removing eventlister for color button first
-    addRandomColorEvent() //invoking random color generater function
+    colorBtn.removeEventListener('click', pickSingleColor); //removing eventlister for color button first
+    pickRandomColor() //invoking random color generater function
 })
 
 //---------adding event listener to color button
 colorBtn.addEventListener('click', () => {
-    randomColorBtn.removeEventListener('click', addRandomColorEvent) //removing event listener from random color button
-    pickColor() // invoking color pick function
+    randomColorBtn.removeEventListener('click', pickRandomColor) //removing event listener from random color button
+    pickSingleColor() // invoking color pick function
 })
 
 //---------function to toggle opacityOn variable
