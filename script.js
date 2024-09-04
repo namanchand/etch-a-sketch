@@ -132,18 +132,21 @@ function pickSingleColor() {
 
         //---------initializing event listener for child div elements
         element.addEventListener("mouseover", () => {
-            element.style.backgroundColor = colorBtn.value
-            colorBtnLabel.style.background = colorBtn.value
+            if (colorMode === "single") {
+                element.style.backgroundColor = colorBtn.value
+                colorBtnLabel.style.background = colorBtn.value
 
-            //---------chaning style color of color button label text to be visible when button background color is black
-            labelTextColor()
+                //---------chaning style color of color button label text to be visible when button background color is black
+                labelTextColor()
 
-            //---------condition to implement opacity (darkening effect) 
-            if (opacityOn && Opacity <= 1) {  //check if opacityOn is true and opacity value is <=1
-                Opacity += 0.1                // increase opacity by 10% on every hover
-                element.style.opacity = Opacity
-            } else {
-                element.style.opacity = 1      //default opacity value if above condition not met
+                //---------condition to implement opacity (darkening effect) 
+                if (opacityOn && Opacity <= 1) {  //check if opacityOn is true and opacity value is <=1
+                    Opacity += 0.1                // increase opacity by 10% on every hover
+                    element.style.opacity = Opacity
+                } else {
+                    element.style.opacity = 1      //default opacity value if above condition not met
+                }
+
             }
         })
     }
@@ -164,32 +167,40 @@ function pickRandomColor() {
 
         //---------initializing event listener on child divs
         element.addEventListener('mouseover', () => {
+            if (colorMode === "random") {
 
-            element.style.backgroundColor = `rgb(${randomColor(225)}, ${randomColor(225)}, ${randomColor(225)})`
-            randomColorBtn.style.background = `rgb(${randomColor(225)}, ${randomColor(225)}, ${randomColor(225)})`
+                labelTextColor()
+                element.style.backgroundColor = `rgb(${randomColor(225)}, ${randomColor(225)}, ${randomColor(225)})`
+                randomColorBtn.style.background = `rgb(${randomColor(225)}, ${randomColor(225)}, ${randomColor(225)})`
 
-            //---------opacity conditions
-            if (opacityOn && Opacity <= 1) {
-                Opacity += 0.1
-                element.style.opacity = Opacity
-            } else {
-                element.style.opacity = 1
+                //---------opacity conditions
+                if (opacityOn && Opacity <= 1) {
+                    Opacity += 0.1
+                    element.style.opacity = Opacity
+                } else {
+                    element.style.opacity = 1
+                }
             }
         })
     }
 }
 
+//---------adding event listener to color button
+colorBtn.addEventListener('click', () => {
+    labelTextColor()
+    colorMode = 'single'
+    randomColorBtn.removeEventListener('click', pickRandomColor) //removing event listener from random color button
+    pickSingleColor() // invoking color pick function
+    randomColorBtn.style.backgroundColor = '#57d8ff'
+})
 
 //---------adding event listener to random color button
 randomColorBtn.addEventListener('click', () => {
+    colorMode = 'random'
     colorBtn.removeEventListener('click', pickSingleColor); //removing eventlister for color button first
     pickRandomColor() //invoking random color generater function
-})
-
-//---------adding event listener to color button
-colorBtn.addEventListener('click', () => {
-    randomColorBtn.removeEventListener('click', pickRandomColor) //removing event listener from random color button
-    pickSingleColor() // invoking color pick function
+    colorBtnLabel.style.backgroundColor = '#57d8ff'
+    labelTextColor()
 })
 
 //---------function to toggle opacityOn variable
