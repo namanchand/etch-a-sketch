@@ -119,7 +119,7 @@ gridSizeSubmitBtn.addEventListener('click', () => {
         div.remove()
     })
     //---------limiting grid size value between 16 and 100
-    gridSize = Math.min(Math.max(gridSizeField.value, 16), 100)
+    gridSize = Math.min(Math.max(Math.trunc(gridSizeField.value), 16), 100)
     //---------create new grid by calling createGrid function
     createGrid()
 })
